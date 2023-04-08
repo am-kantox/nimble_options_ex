@@ -2,7 +2,7 @@ defmodule NimbleOptionsExTest do
   use ExUnit.Case
   doctest NimbleOptionsEx
 
-  describe "behaviour" do
+  describe "behaviour/2" do
     test "wrong schema" do
       schema = [container: [type: {:custom, NimbleOptionsEx, :behaviour, [No_Access]}]]
 
@@ -66,6 +66,23 @@ defmodule NimbleOptionsExTest do
       ]
 
       assert {:ok, container: Map} = NimbleOptions.validate([container: Map], schema)
+    end
+  end
+
+  describe "access?/1" do
+    test "ok" do
+      schema = [container: [type: {:custom, NimbleOptionsEx, :access?, []}]]
+
+      assert {:ok, _} = NimbleOptions.validate([container: %S{}], schema)
+
+      assert {:error,
+              %NimbleOptions.ValidationError{
+                message:
+                  "invalid value for :container option: module ‹DateTime› does not implement requested callbacks ‹[pop: 2, get_and_update: 3, fetch: 2]›",
+                key: :container,
+                value: %DateTime{},
+                keys_path: []
+              }} = NimbleOptions.validate([container: DateTime.utc_now()], schema)
     end
   end
 end
