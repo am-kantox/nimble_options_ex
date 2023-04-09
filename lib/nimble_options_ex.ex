@@ -100,7 +100,7 @@ defmodule NimbleOptionsEx do
         key: :container, value: [1, 2, 3], keys_path: []}}
   """
   @spec access?(term()) ::
-          {:ok, validated_option :: module()} | {:error, NimbleOptions.ValidationError.t()}
+          {:ok, validated_option :: module()} | {:error, String.t()}
   def access?(nil), do: {:ok, nil}
 
   def access?(value) when is_list(value) do
