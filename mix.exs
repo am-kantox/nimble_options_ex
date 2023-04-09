@@ -10,8 +10,12 @@ defmodule NimbleOptionsEx.MixProject do
       version: @version,
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
+      description: description(),
+      package: package(),
       deps: deps(),
       aliases: aliases(),
+      xref: [exclude: []],
+      docs: docs(),
       dialyzer: [
         plt_file: {:no_warn, ".dialyzer/dialyzer.plt"},
         plt_add_deps: :transitive,
@@ -42,6 +46,36 @@ defmodule NimbleOptionsEx.MixProject do
         "credo --strict",
         "dialyzer"
       ]
+    ]
+  end
+
+  defp description do
+    """
+    Pack of custom functions to enhance the UX with `NimbleOptions`.
+    """
+  end
+
+  defp package do
+    [
+      name: @app,
+      files: ~w|lib mix.exs README.md LICENSE|,
+      maintainers: ["Aleksei Matiushkin"],
+      licenses: ["Kantox LTD"],
+      links: %{
+        "GitHub" => "https://github.com/am-kantox/#{@app}",
+        "Docs" => "https://hexdocs.pm/#{@app}"
+      }
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      source_ref: "v#{@version}",
+      canonical: "http://hexdocs.pm/#{@app}",
+      source_url: "https://github.com/am-kantox/#{@app}",
+      extras: ~w[README.md],
+      groups_for_modules: []
     ]
   end
 end
