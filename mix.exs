@@ -18,7 +18,7 @@ defmodule NimbleOptionsEx.MixProject do
       docs: docs(),
       dialyzer: [
         plt_file: {:no_warn, ".dialyzer/dialyzer.plt"},
-        plt_add_deps: :transitive,
+        plt_add_deps: :app_tree,
         plt_add_apps: [:nimble_options],
         list_unused_filters: true,
         ignore_warnings: ".dialyzer_ignore.exs"

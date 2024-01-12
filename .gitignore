@@ -30,3 +30,5 @@ nimble_options_ex-*.tar
 
 # ASDF
 .tool-versions
+
+/.elixir-tools/
