@@ -11,7 +11,7 @@ defmodule NimbleOptionsExTest do
                NimbleOptions.validate([container: Map], schema)
 
       assert message ==
-               "invalid value for :container option: schema is invalid, ‹No_Access› is not a behaviour"
+               "invalid value for :container option: schema is invalid, ‹No_Access› is not implementing the expected behaviour"
     end
 
     test "wrong argument type (not a module)" do
@@ -83,6 +83,26 @@ defmodule NimbleOptionsExTest do
                 value: %DateTime{},
                 keys_path: []
               }} = NimbleOptions.validate([container: DateTime.utc_now()], schema)
+    end
+  end
+
+  describe "property/2" do
+    test "simple type" do
+      schema = [prop: [type: {:custom, NimbleOptionsEx, :property, [:string]}]]
+
+      assert {:ok, _result} = NimbleOptions.validate([prop: {:foo, "bar"}], schema)
+
+      assert {:error, %NimbleOptions.ValidationError{}} =
+               NimbleOptions.validate([prop: {:foo, :bar}], schema)
+    end
+
+    test "strict keyword type" do
+      schema = [prop: [type: {:custom, NimbleOptionsEx, :property, [foo: :string]}]]
+
+      assert {:ok, _result} = NimbleOptions.validate([prop: {:foo, "bar"}], schema)
+
+      assert {:error, %NimbleOptions.ValidationError{}} =
+               NimbleOptions.validate([prop: {:foo, :bar}], schema)
     end
   end
 end

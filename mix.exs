@@ -34,7 +34,7 @@ defmodule NimbleOptionsEx.MixProject do
       # dev / test / ci
       {:credo, "~> 1.0", only: [:dev, :ci], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev, :ci], runtime: false},
-      {:ex_doc, "~> 0.11", only: [:dev], runtime: false}
+      {:ex_doc, ">= 0.0.0", only: [:dev], runtime: false}
     ]
   end
 
